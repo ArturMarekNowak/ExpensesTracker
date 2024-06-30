@@ -2,8 +2,8 @@ apiVersion: v1
 entries:
   helm:
   - apiVersion: v2
-    appVersion: latest
-    created: "2024-06-30T21:52:21.7248327+02:00"
+    appVersion: 1.0.0
+    created: "2024-06-30T22:06:30.5985391+02:00"
     description: A Helm chart for Kubernetes
     digest: c5ff6050233cc621f6d79cafe6aec9836dedc43cdc60bb2e2145843f9ed99c29
     name: helm
@@ -11,4 +11,4 @@ entries:
     urls:
     - helm-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-30T21:52:21.7228516+02:00"
+generated: "2024-06-30T22:06:30.5972957+02:00"

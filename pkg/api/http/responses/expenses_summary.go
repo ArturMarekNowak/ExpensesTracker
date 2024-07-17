@@ -1,7 +1,6 @@
 package responses
 
 import (
-	"database/sql"
 	"github.com/shopspring/decimal"
 	"time"
 )
@@ -11,7 +10,7 @@ type ExpensesSummaryResponse struct {
 	CreatedAt                 time.Time
 	UpdatedAt                 time.Time
 	Name                      string
-	ClosedAt                  sql.NullTime
+	ClosedAt                  time.Time
 	UsdToPlnRatio             float64
 	MoneyTransferredToSavings float64
 	Incomes                   map[string]decimal.Decimal

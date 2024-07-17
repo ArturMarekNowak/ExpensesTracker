@@ -1,10 +1,12 @@
 package requests
 
-import "database/sql"
+import (
+	"time"
+)
 
 type CreateExpenseSummaryRequest struct {
 	Name                      string
-	ClosedAt                  sql.NullTime
+	ClosedAt                  time.Time
 	UsdToPlnRatio             float64
 	MoneyTransferredToSavings float64
 }

@@ -16,9 +16,7 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 	}
 
 	db := database.OpenConnection()
-	db.Create(&entities.ExpensesSummary{
-		Name: "foo",
-	})
+	db.Create(&expenseSummary)
 
 	return responses.ExpensesSummaryResponse{
 		Id:                        expenseSummary.Id,

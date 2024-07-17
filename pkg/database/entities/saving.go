@@ -1,11 +1,11 @@
-package model
+package entities
 
 import (
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
 )
 
-type Expense struct {
+type Saving struct {
 	gorm.Model
 	Name              string
 	Value             decimal.Decimal `gorm:"type:numeric(10,2)"`

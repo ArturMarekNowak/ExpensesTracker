@@ -1,13 +1,15 @@
-package model
+package entities
 
 import (
 	"database/sql"
-	"gorm.io/gorm"
+	"time"
 )
 
 type ExpensesSummary struct {
-	gorm.Model
+	Id                        uint
 	Name                      string
+	CreatedAt                 time.Time
+	UpdatedAt                 time.Time
 	ClosedAt                  sql.NullTime
 	UsdToPlnRatio             float64
 	MoneyTransferredToSavings float64

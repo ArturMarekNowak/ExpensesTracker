@@ -9,3 +9,6 @@ type Income struct {
 	Value             decimal.Decimal `gorm:"type:numeric(10,2)"`
 	ExpensesSummaryId uint
 }
+
+func (m []Income) Method() {
+}

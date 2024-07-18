@@ -29,10 +29,14 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 	}
 }
 
-func DeleteExpensesSummary() {
-
+func DeleteExpensesSummary(id uint) {
+	db := database.OpenConnection()
+	db.Delete(&entities.ExpensesSummary{}, id)
 }
 
-func GetExpensesSummary() {
-
+func GetExpensesSummary(id uint) {
+	db := database.OpenConnection()
+	db.First(&entities.ExpensesSummary{
+		Id: id,
+	})
 }

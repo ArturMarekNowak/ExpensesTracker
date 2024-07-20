@@ -19,15 +19,19 @@ func CreateExpensesSummary(c *gin.Context) {
 }
 
 func DeleteExpensesSummary(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
 	}
-	services.DeleteExpensesSummary(uint(id))
+	err = services.DeleteExpensesSummary(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "invalid path parameter"})
+	}
+	c.JSON(http.StatusNoContent, nil)
 }
 
 func GetExpensesSummary(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
 	}

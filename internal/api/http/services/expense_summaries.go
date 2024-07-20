@@ -5,6 +5,7 @@ import (
 	"ExpensesTracker/pkg/api/http/responses"
 	"ExpensesTracker/pkg/database"
 	"ExpensesTracker/pkg/database/entities"
+	"errors"
 )
 
 func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryRequest) responses.ExpensesSummaryResponse {
@@ -29,14 +30,20 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 	}
 }
 
-func DeleteExpensesSummary(id uint) {
+func DeleteExpensesSummary(id uint) error {
 	db := database.OpenConnection()
-	db.Delete(&entities.ExpensesSummary{}, id)
+	res := db.Delete(&entities.ExpensesSummary{}, id)
+	if res.RowsAffected == 0 {
+		return errors.New("No data found")
+	}
+	return nil
 }
 
-func GetExpensesSummary(id uint) {
-	db := database.OpenConnection()
-	db.First(&entities.ExpensesSummary{
+func GetExpensesSummary(id uint) entities.ExpensesSummary {
+	expensesSummary := entities.ExpensesSummary{
 		Id: id,
-	})
+	}
+	db := database.OpenConnection()
+	db.First(&expensesSummary)
+	return expensesSummary
 }

@@ -5,7 +5,6 @@ import (
 )
 
 type ExpenseResponse struct {
-	ID    uint
 	Name  string
 	Value decimal.Decimal
 }

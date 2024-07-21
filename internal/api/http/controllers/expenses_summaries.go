@@ -35,5 +35,6 @@ func GetExpensesSummary(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
 	}
-	services.GetExpensesSummary(uint(id))
+	res := services.GetExpensesSummary(uint(id))
+	c.JSON(http.StatusCreated, res)
 }

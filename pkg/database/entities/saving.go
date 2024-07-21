@@ -5,7 +5,7 @@ import (
 )
 
 type Saving struct {
+	ExpensesSummaryId uint            `gorm:"primaryKey"`
 	Name              string          `gorm:"primaryKey"`
 	Value             decimal.Decimal `gorm:"type:numeric(10,2)"`
-	ExpensesSummaryId uint
 }

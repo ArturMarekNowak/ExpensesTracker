@@ -9,7 +9,7 @@ type ExpensesSummaryResponse struct {
 	CreatedAt                 time.Time
 	UpdatedAt                 time.Time
 	Name                      string
-	ClosedAt                  time.Time
+	ClosedAt                  *time.Time `json:",omitempty"`
 	UsdToPlnRatio             float64
 	MoneyTransferredToSavings float64
 }

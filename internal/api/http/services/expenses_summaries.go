@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryRequest) responses.ExpensesSummaryResponse {
+func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryRequest) responses.CreateExpensesSummaryResponse {
 	expensesSummary := entities.ExpensesSummary{
 		Name:                      createExpenseSummary.Name,
 		ClosedAt:                  createExpenseSummary.ClosedAt,
@@ -25,7 +25,7 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 		closedAt = nil
 	}
 
-	return responses.ExpensesSummaryResponse{
+	return responses.CreateExpensesSummaryResponse{
 		Id:                        expensesSummary.Id,
 		Name:                      expensesSummary.Name,
 		CreatedAt:                 expensesSummary.CreatedAt,
@@ -45,7 +45,7 @@ func DeleteExpensesSummary(id uint) error {
 	return nil
 }
 
-func GetExpensesSummary(id uint) (*responses.ExpensesSummaryResponse, error) {
+func GetExpensesSummary(id uint) (*responses.GetExpensesSummaryResponse, error) {
 	expensesSummary := entities.ExpensesSummary{}
 	db := database.OpenConnection()
 	res := db.Preload("Incomes").Preload("Expenses").Preload("Savings").First(&expensesSummary, id)
@@ -58,7 +58,7 @@ func GetExpensesSummary(id uint) (*responses.ExpensesSummaryResponse, error) {
 		closedAt = nil
 	}
 
-	return &responses.ExpensesSummaryResponse{
+	expensesResponse := responses.GetExpensesSummaryResponse{
 		Id:                        expensesSummary.Id,
 		Name:                      expensesSummary.Name,
 		CreatedAt:                 expensesSummary.CreatedAt,
@@ -66,5 +66,28 @@ func GetExpensesSummary(id uint) (*responses.ExpensesSummaryResponse, error) {
 		ClosedAt:                  closedAt,
 		UsdToPlnRatio:             expensesSummary.UsdToPlnRatio,
 		MoneyTransferredToSavings: expensesSummary.MoneyTransferredToSavings,
-	}, nil
+	}
+
+	for _, element := range expensesSummary.Incomes {
+		expensesResponse.Incomes = append(expensesResponse.Incomes, responses.IncomeResponse{
+			Name:  element.Name,
+			Value: element.Value,
+		})
+	}
+
+	for _, element := range expensesSummary.Savings {
+		expensesResponse.Savings = append(expensesResponse.Savings, responses.SavingResponse{
+			Name:  element.Name,
+			Value: element.Value,
+		})
+	}
+
+	for _, element := range expensesSummary.Expenses {
+		expensesResponse.Expenses = append(expensesResponse.Expenses, responses.ExpenseResponse{
+			Name:  element.Name,
+			Value: element.Value,
+		})
+	}
+
+	return &expensesResponse, nil
 }

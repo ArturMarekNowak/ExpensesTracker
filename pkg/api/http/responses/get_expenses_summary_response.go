@@ -1,15 +1,16 @@
 package responses
 
-import (
-	"time"
-)
+import "time"
 
-type ExpensesSummaryResponse struct {
+type GetExpensesSummaryResponse struct {
 	Id                        uint
+	Name                      string
 	CreatedAt                 time.Time
 	UpdatedAt                 time.Time
-	Name                      string
 	ClosedAt                  *time.Time `json:",omitempty"`
 	UsdToPlnRatio             float64
 	MoneyTransferredToSavings float64
+	Incomes                   []IncomeResponse
+	Expenses                  []ExpenseResponse
+	Savings                   []SavingResponse
 }

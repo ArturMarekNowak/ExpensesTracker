@@ -39,5 +39,5 @@ func GetExpensesSummary(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "invalid path parameter"})
 	}
-	c.JSON(http.StatusCreated, res)
+	c.JSON(http.StatusOK, res)
 }

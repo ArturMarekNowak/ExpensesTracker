@@ -39,11 +39,12 @@ func DeleteExpensesSummary(id uint) error {
 	return nil
 }
 
-func GetExpensesSummary(id uint) entities.ExpensesSummary {
-	expensesSummary := entities.ExpensesSummary{
-		Id: id,
-	}
+func GetExpensesSummary(id uint) (*entities.ExpensesSummary, error) {
+	expensesSummary := entities.ExpensesSummary{}
 	db := database.OpenConnection()
-	db.First(&expensesSummary)
-	return expensesSummary
+	res := db.Preload("Incomes").Preload("Expenses").Preload("Savings").First(&expensesSummary, id)
+	if res.RowsAffected == 0 {
+		return nil, errors.New("No` data found")
+	}
+	return &expensesSummary, nil
 }

@@ -52,42 +52,5 @@ func GetExpensesSummary(id uint) (*responses.GetExpensesSummaryResponse, error) 
 	if res.RowsAffected == 0 {
 		return nil, errors.New("No` data found")
 	}
-
-	var closedAt *time.Time
-	if expensesSummary.ClosedAt.IsZero() {
-		closedAt = nil
-	}
-
-	expensesResponse := responses.GetExpensesSummaryResponse{
-		Id:                        expensesSummary.Id,
-		Name:                      expensesSummary.Name,
-		CreatedAt:                 expensesSummary.CreatedAt,
-		UpdatedAt:                 expensesSummary.UpdatedAt,
-		ClosedAt:                  closedAt,
-		UsdToPlnRatio:             expensesSummary.UsdToPlnRatio,
-		MoneyTransferredToSavings: expensesSummary.MoneyTransferredToSavings,
-	}
-
-	for _, element := range expensesSummary.Incomes {
-		expensesResponse.Incomes = append(expensesResponse.Incomes, responses.IncomeResponse{
-			Name:  element.Name,
-			Value: element.Value,
-		})
-	}
-
-	for _, element := range expensesSummary.Savings {
-		expensesResponse.Savings = append(expensesResponse.Savings, responses.SavingResponse{
-			Name:  element.Name,
-			Value: element.Value,
-		})
-	}
-
-	for _, element := range expensesSummary.Expenses {
-		expensesResponse.Expenses = append(expensesResponse.Expenses, responses.ExpenseResponse{
-			Name:  element.Name,
-			Value: element.Value,
-		})
-	}
-
-	return &expensesResponse, nil
+	return expensesSummary.MapToGetExpensesSummaryResponse(), nil
 }

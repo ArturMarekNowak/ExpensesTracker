@@ -18,6 +18,25 @@ type ExpensesSummary struct {
 	Savings                   []Saving
 }
 
+func (expensesSummary *ExpensesSummary) MapToCreateExpensesSummaryResponse() *responses.CreateExpensesSummaryResponse {
+	var closedAt *time.Time
+	if expensesSummary.ClosedAt.IsZero() {
+		closedAt = nil
+	}
+
+	expensesResponse := responses.CreateExpensesSummaryResponse{
+		Id:                        expensesSummary.Id,
+		Name:                      expensesSummary.Name,
+		CreatedAt:                 expensesSummary.CreatedAt,
+		UpdatedAt:                 expensesSummary.UpdatedAt,
+		ClosedAt:                  closedAt,
+		UsdToPlnRatio:             expensesSummary.UsdToPlnRatio,
+		MoneyTransferredToSavings: expensesSummary.MoneyTransferredToSavings,
+	}
+
+	return &expensesResponse
+}
+
 func (expensesSummary *ExpensesSummary) MapToGetExpensesSummaryResponse() *responses.GetExpensesSummaryResponse {
 	var closedAt *time.Time
 	if expensesSummary.ClosedAt.IsZero() {

@@ -7,10 +7,9 @@ import (
 	"ExpensesTracker/pkg/database/entities"
 	"errors"
 	"gorm.io/gorm/clause"
-	"time"
 )
 
-func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryRequest) responses.CreateExpensesSummaryResponse {
+func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryRequest) *responses.CreateExpensesSummaryResponse {
 	expensesSummary := entities.ExpensesSummary{
 		Name:                      createExpenseSummary.Name,
 		ClosedAt:                  createExpenseSummary.ClosedAt,
@@ -21,20 +20,7 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 	db := database.OpenConnection()
 	db.Create(&expensesSummary)
 
-	var closedAt *time.Time
-	if expensesSummary.ClosedAt.IsZero() {
-		closedAt = nil
-	}
-
-	return responses.CreateExpensesSummaryResponse{
-		Id:                        expensesSummary.Id,
-		Name:                      expensesSummary.Name,
-		CreatedAt:                 expensesSummary.CreatedAt,
-		UpdatedAt:                 expensesSummary.UpdatedAt,
-		ClosedAt:                  closedAt,
-		UsdToPlnRatio:             expensesSummary.UsdToPlnRatio,
-		MoneyTransferredToSavings: expensesSummary.MoneyTransferredToSavings,
-	}
+	return expensesSummary.MapToCreateExpensesSummaryResponse()
 }
 
 func DeleteExpensesSummary(id uint) error {

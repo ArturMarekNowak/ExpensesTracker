@@ -23,6 +23,7 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 	return expensesSummary.MapToCreateExpensesSummaryResponse()
 }
 
+// Source: https://gorm.io/docs/associations.html#Delete-Associations
 func DeleteExpensesSummary(id uint) error {
 	db := database.OpenConnection()
 	res := db.Select(clause.Associations).Delete(&entities.ExpensesSummary{Id: id})

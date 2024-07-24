@@ -3,6 +3,7 @@ package controllers
 import (
 	"ExpensesTracker/internal/api/http/services"
 	"ExpensesTracker/pkg/api/http/requests"
+	"ExpensesTracker/pkg/api/http/responses"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -12,13 +13,13 @@ import (
 func UpdateIncome(c *gin.Context) {
 	summaryExpenseId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
+		c.JSON(http.StatusBadRequest, responses.NewBadPathParameterError("Income"))
 	}
 	SavingId := c.Param("resourceStringId")
 	var updateIncome requests.CreateIncomeRequest
 	err = c.BindJSON(&updateIncome)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body"})
+		c.JSON(http.StatusBadRequest, responses.NewBadRequestBodyError("Income"))
 	}
 	res := services.UpdateIncome(uint(summaryExpenseId), SavingId, updateIncome)
 	c.JSON(http.StatusOK, res)
@@ -27,12 +28,12 @@ func UpdateIncome(c *gin.Context) {
 func DeleteIncome(c *gin.Context) {
 	expenseSummaryId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
+		c.JSON(http.StatusBadRequest, responses.NewBadPathParameterError("Income"))
 	}
 	expenseId := c.Param("resourceStringId")
 	err = services.DeleteIncome(uint(expenseSummaryId), expenseId)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "invalid path parameter"})
+		c.JSON(http.StatusNotFound, responses.NewNotFoundError("Income"))
 	}
 	c.JSON(http.StatusNoContent, nil)
 }

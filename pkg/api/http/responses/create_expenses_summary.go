@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Source: https://medium.com/@gopal96685/exploring-json-tag-omitempty-in-go-simplify-your-json-output-3ec975585b49
 type CreateExpensesSummaryResponse struct {
 	Id                        uint
 	Name                      string

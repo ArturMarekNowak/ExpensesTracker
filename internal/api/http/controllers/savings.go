@@ -24,8 +24,12 @@ func UpdateSaving(c *gin.Context) {
 }
 
 func DeleteSaving(c *gin.Context) {
-	id := c.Param("resourceStringId")
-	err := services.DeleteSaving(id)
+	expenseSummaryId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
+	}
+	expenseId := c.Param("resourceStringId")
+	err = services.DeleteSaving(uint(expenseSummaryId), expenseId)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "invalid path parameter"})
 	}

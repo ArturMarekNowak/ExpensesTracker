@@ -6,6 +6,7 @@ import (
 	"ExpensesTracker/pkg/database"
 	"ExpensesTracker/pkg/database/entities"
 	"errors"
+	"gorm.io/gorm/clause"
 	"time"
 )
 
@@ -38,7 +39,7 @@ func CreateExpensesSummary(createExpenseSummary requests.CreateExpenseSummaryReq
 
 func DeleteExpensesSummary(id uint) error {
 	db := database.OpenConnection()
-	res := db.Delete(&entities.ExpensesSummary{}, id)
+	res := db.Select(clause.Associations).Delete(&entities.ExpensesSummary{Id: id})
 	if res.RowsAffected == 0 {
 		return errors.New("No data found")
 	}

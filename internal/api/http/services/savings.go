@@ -25,9 +25,12 @@ func UpdateSaving(summaryExpenseId uint, name string, updateSaving requests.Crea
 	}
 }
 
-func DeleteSaving(id string) error {
+func DeleteSaving(expensesSummaryId uint, savingId string) error {
 	db := database.OpenConnection()
-	res := db.Delete(entities.Saving{Name: id})
+	res := db.Delete(entities.Saving{
+		ExpensesSummaryId: expensesSummaryId,
+		Name:              savingId,
+	})
 	if res.RowsAffected == 0 {
 		return errors.New("No data found")
 	}

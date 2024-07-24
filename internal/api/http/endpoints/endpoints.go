@@ -9,7 +9,7 @@ func ConfigureEndpoints() {
 	router := gin.Default()
 	router.POST("/expensesSummaries", controllers.CreateExpensesSummary)
 	router.GET("/expensesSummaries/:resourceIntegerId", controllers.GetExpensesSummary)
-	router.DELETE("/expenseSummaries/:resourceIntegerId", controllers.DeleteExpensesSummary)
+	router.DELETE("/expensesSummaries/:resourceIntegerId", controllers.DeleteExpensesSummary)
 	router.PUT("/expensesSummaries/:resourceIntegerId/expenses/:resourceStringId", controllers.UpdateExpense)
 	router.DELETE("/expensesSummaries/:resourceIntegerId/expenses/:resourceStringId", controllers.DeleteExpense)
 	router.PUT("/expensesSummaries/:resourceIntegerId/incomes/:resourceStringId", controllers.UpdateIncome)

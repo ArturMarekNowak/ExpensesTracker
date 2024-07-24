@@ -25,8 +25,12 @@ func UpdateExpense(c *gin.Context) {
 }
 
 func DeleteExpense(c *gin.Context) {
-	id := c.Param("resourceStringId")
-	err := services.DeleteExpense(id)
+	expenseSummaryId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid path parameter"})
+	}
+	expenseId := c.Param("resourceStringId")
+	err = services.DeleteExpense(uint(expenseSummaryId), expenseId)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "invalid path parameter"})
 	}

@@ -8,8 +8,8 @@ type GetExpensesSummaryResponse struct {
 	CreatedAt                 time.Time
 	UpdatedAt                 time.Time
 	ClosedAt                  *time.Time `json:",omitempty"`
-	UsdToPlnRatio             float64
-	MoneyTransferredToSavings float64
+	UsdToPlnRatio             float32
+	MoneyTransferredToSavings float32
 	Incomes                   map[string]float32
 	Expenses                  map[string]float32
 	Savings                   map[string]float32

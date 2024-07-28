@@ -11,8 +11,8 @@ type ExpensesSummary struct {
 	CreatedAt                 time.Time
 	UpdatedAt                 time.Time
 	ClosedAt                  time.Time `gorm:"type:timestamp with time zone;default:null"`
-	UsdToPlnRatio             float64   `gorm:"type:numeric(4,2)"`
-	MoneyTransferredToSavings float64   `gorm:"type:numeric(10,2)"`
+	UsdToPlnRatio             float32   `gorm:"type:numeric(4,2)"`
+	MoneyTransferredToSavings float32   `gorm:"type:numeric(10,2)"`
 	Incomes                   []Income
 	Expenses                  []Expense
 	Savings                   []Saving

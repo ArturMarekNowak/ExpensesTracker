@@ -9,7 +9,7 @@ import (
 )
 
 // Source: https://stackoverflow.com/questions/39333102/how-to-create-or-update-a-record-with-gorm
-func UpdateExpense(summaryExpenseId uint, name string, updateSaving requests.CreateExpenseRequest) responses.ExpenseResponse {
+func UpsertExpense(summaryExpenseId uint, name string, updateSaving requests.CreateExpenseRequest) responses.ExpenseResponse {
 	expense := entities.Expense{
 		Name:              name,
 		ExpensesSummaryId: summaryExpenseId,

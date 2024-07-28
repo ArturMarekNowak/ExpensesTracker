@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func UpdateSaving(c *gin.Context) {
+func UpsertSaving(c *gin.Context) {
 	summaryExpenseId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadPathParameterError("Saving"))
@@ -20,7 +20,7 @@ func UpdateSaving(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadRequestBodyError("Saving"))
 	}
-	res := services.UpdateSaving(uint(summaryExpenseId), SavingId, updateSaving)
+	res := services.UpsertSaving(uint(summaryExpenseId), SavingId, updateSaving)
 	c.JSON(http.StatusOK, res)
 }
 

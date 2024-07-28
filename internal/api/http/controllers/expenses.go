@@ -10,7 +10,7 @@ import (
 )
 
 // Source: https://stackoverflow.com/questions/39333102/how-to-create-or-update-a-record-with-gorm
-func UpdateExpense(c *gin.Context) {
+func UpsertExpense(c *gin.Context) {
 	summaryExpenseId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadPathParameterError("Expense"))
@@ -21,7 +21,7 @@ func UpdateExpense(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadRequestBodyError("Expense"))
 	}
-	res := services.UpdateExpense(uint(summaryExpenseId), SavingId, updateIncome)
+	res := services.UpsertExpense(uint(summaryExpenseId), SavingId, updateIncome)
 	c.JSON(http.StatusOK, res)
 }
 

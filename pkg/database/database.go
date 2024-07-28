@@ -4,6 +4,7 @@ import (
 	"ExpensesTracker/pkg/database/entities"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"os"
 )
 
 func RunMigrations() {
@@ -21,7 +22,7 @@ func RunMigrations() {
 
 func OpenConnection() *gorm.DB {
 
-	db, err := gorm.Open(postgres.Open("host=localhost user=postgres password=admin dbname=ExpensesTracker port=5432 sslmode=disable"), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(os.Getenv("CONNECTION_STRING")), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
 	}

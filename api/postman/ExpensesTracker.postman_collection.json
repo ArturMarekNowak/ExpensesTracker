@@ -1,0 +1,1409 @@
+{
+	"info": {
+		"_postman_id": "288584eb-84b3-4828-973d-2e158a133647",
+		"name": "ExpensesTracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37057884"
+	},
+	"item": [
+		{
+			"name": "Create expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 201\",  ()=>{\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"Id\", jsonData.Id)\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Sierpień 2024\",\r\n    \"ClosedAt\": null, \r\n    \"UsdToPlnRatio\": 3.94,\r\n    \"MoneyTransferredToSavings\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes are empty\",  ()=>{\r",
+							"    incomes.length == 0\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses are empty\",  ()=>{\r",
+							"    expenses.length == 0\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings are empty\",  ()=>{\r",
+							"    savings.length == 0\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create income",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to wypłata\",  ()=>{\r",
+							"    jsonData.Name == 'wypłata'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 10000\",  ()=>{\r",
+							"    jsonData.Value == 10000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 10000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/incomes/wypłata",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"incomes",
+						"wypłata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have one value\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses are empty\",  ()=>{\r",
+							"    expenses.length == 0\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings are empty\",  ()=>{\r",
+							"    savings.length == 0\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update income",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\", () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to wypłata\", () => {\r",
+							"    jsonData.Name == 'wypłata'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 20000\", () => {\r",
+							"    jsonData.Value == 20000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 20000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/incomes/wypłata",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"incomes",
+						"wypłata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 201\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"Id\", jsonData.Id)\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have one value\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses are empty\",  ()=>{\r",
+							"    expenses.length == 0\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings are empty\",  ()=>{\r",
+							"    savings.length == 0\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create saving",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to konto oszczędnościowe\",  ()=>{\r",
+							"    jsonData.Name == 'konto oszczędnościowe'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 100000\",  ()=>{\r",
+							"    jsonData.Value == 100000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 100000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/savings/konto%20oszczędnościowe",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"savings",
+						"konto%20oszczędnościowe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have one value\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses are empty\",  ()=>{\r",
+							"    expenses.length == 0\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have one value\",  ()=>{\r",
+							"    savings.length == 1\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update saving",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to konto oszczędnościowe\",  ()=>{\r",
+							"    jsonData.Name == 'konto oszczędnościowe'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 200000\",  ()=>{\r",
+							"    jsonData.Value == 200000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 200000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/savings/konto%20oszczędnościowe",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"savings",
+						"konto%20oszczędnościowe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have one value\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses are empty\",  ()=>{\r",
+							"    expenses.length == 0\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have one value\",  ()=>{\r",
+							"    savings.length == 1\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to jedzenie\",  ()=>{\r",
+							"    jsonData.Name == 'jedzenie'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 1000\",  ()=>{\r",
+							"    jsonData.Value == 1000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 1000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/expenses/jedzenie",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"expenses",
+						"jedzenie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have one value\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses have one value\",  ()=>{\r",
+							"    expenses.length == 1\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have one value\",  ()=>{\r",
+							"    savings.length == 1\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to jedzenie\",  ()=>{\r",
+							"    jsonData.Name == 'jedzenie'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 1000\",  ()=>{\r",
+							"    jsonData.Value == 2000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 2000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/expenses/jedzenie",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"expenses",
+						"jedzenie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create another income",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to dywidenda\",  ()=>{\r",
+							"    jsonData.Name == 'wypłata'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 2000\",  ()=>{\r",
+							"    jsonData.Value == 2000\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 2000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/incomes/dywidenda",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"incomes",
+						"dywidenda"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create another saving",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to lokata\",  ()=>{\r",
+							"    jsonData.Name == 'lokata'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 123.23\",  ()=>{\r",
+							"    jsonData.Value == 123.23\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 123.23\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/savings/lokata",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"savings",
+						"lokata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create another expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Name is equal to fryzjer\",  ()=>{\r",
+							"    jsonData.Name == 'fryzjer'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Value is equal to 50.00\",  ()=>{\r",
+							"    jsonData.Value == 50.00\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Value\": 50.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/expenses/fryzjer",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"expenses",
+						"fryzjer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have two values\",  ()=>{\r",
+							"    incomes.length == 2\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses have two values\",  ()=>{\r",
+							"    expenses.length == 2\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have two values\",  ()=>{\r",
+							"    savings.length == 2\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete income",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 204\",  ()=>{\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/incomes/dywidenda",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"incomes",
+						"dywidenda"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have two values\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses have two values\",  ()=>{\r",
+							"    expenses.length == 2\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have two values\",  ()=>{\r",
+							"    savings.length == 2\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete saving",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 204\",  ()=>{\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/savings/lokata",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"savings",
+						"lokata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have two values\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses have two values\",  ()=>{\r",
+							"    expenses.length == 2\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have two values\",  ()=>{\r",
+							"    savings.length == 1\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 204\",  ()=>{\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}/expenses/fryzjer",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}",
+						"expenses",
+						"fryzjer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 200\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"pm.test(\"Id is equal to env var\",  ()=>{\r",
+							"    jsonData.Id == environment.Id\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Name is equal to Sierpień 2024\",  ()=>{\r",
+							"    jsonData.Name == 'Sierpień 2024'\r",
+							"})\r",
+							"\r",
+							"pm.test(\"UsdToPlnRatio is equal to  3.94\",  ()=>{\r",
+							"    jsonData.UsdToPlnRatio == 3.94\r",
+							"})\r",
+							"\r",
+							"pm.test(\"MoneyTransferredToSavings is equal to  0\",  ()=>{\r",
+							"    jsonData.MoneyTransferredToSavings == 0\r",
+							"})\r",
+							"\r",
+							"var incomes = Object.keys(jsonData.Incomes)\r",
+							"pm.test(\"Incomes have two values\",  ()=>{\r",
+							"    incomes.length == 1\r",
+							"})\r",
+							"\r",
+							"var expenses = Object.keys(jsonData.Expenses)\r",
+							"pm.test(\"Expenses have two values\",  ()=>{\r",
+							"    expenses.length == 1\r",
+							"})\r",
+							"\r",
+							"var savings = Object.keys(jsonData.Savings)\r",
+							"pm.test(\"Savings have two values\",  ()=>{\r",
+							"    savings.length == 1\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 204\",  ()=>{\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expenses summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is HTTP 404\",  ()=>{\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}/expensesSummaries/{{Id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"expensesSummaries",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "Url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

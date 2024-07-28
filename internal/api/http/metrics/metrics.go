@@ -1,11 +1,11 @@
-package main
+package metrics
 
 import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"net/http"
 )
 
-func main() {
+func ConfigureMetrics() {
+
 	http.Handle("/metrics", promhttp.Handler())
-	http.ListenAndServe(":8080", nil)
 }

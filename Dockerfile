@@ -1,10 +1,9 @@
 FROM golang:1.22
 
-WORKDIR /app
-COPY go.mod go.sum ./
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
-COPY *.go ./
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o /expensestracker
+COPY . .
+RUN go build -v -o ./expensestracker ./cmd/app
 EXPOSE 8080
-
-CMD ["/expensestracker"]
+CMD ["./expensestracker"]

@@ -14,12 +14,14 @@ func UpsertExpense(c *gin.Context) {
 	summaryExpenseId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadPathParameterError("Expense"))
+		return
 	}
 	SavingId := c.Param("resourceStringId")
 	var updateIncome requests.CreateExpenseRequest
 	err = c.BindJSON(&updateIncome)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadRequestBodyError("Expense"))
+		return
 	}
 	res := services.UpsertExpense(uint(summaryExpenseId), SavingId, updateIncome)
 	c.JSON(http.StatusOK, res)
@@ -29,11 +31,13 @@ func DeleteExpense(c *gin.Context) {
 	expenseSummaryId, err := strconv.ParseUint(c.Param("resourceIntegerId"), 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, responses.NewBadPathParameterError("Expense"))
+		return
 	}
 	expenseId := c.Param("resourceStringId")
 	err = services.DeleteExpense(uint(expenseSummaryId), expenseId)
 	if err != nil {
 		c.JSON(http.StatusNotFound, responses.NewNotFoundError("Expense"))
+		return
 	}
 	c.JSON(http.StatusNoContent, nil)
 }
